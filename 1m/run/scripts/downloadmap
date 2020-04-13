@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# download map into 1m mapset
+# bash script to download a map
+#
+#
+#  1st parameter = $1 = filename = .zip map to download
+#  2nd parameter = $2 = directory location to save map to
+
+filename=$1 
+saveto=$2
+url=ftp://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/1m_tif/
+
+echo "1st parameter filename = $filename"
+echo "2nd parameter saveto = $saveto"
+
+# check user entered a filename
+if [ -z "$filename" ]
+then
+      echo "no filename specified"
+      echo "retry using template..."
+      echo "downloadmap 031e_0300_canmatrix_prttif.zip"
+      exit 1
+else
+      echo " downloading $filename "
+fi
+
+#  
+# build url+subdir+filename for download -eg- 
+# ftp://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/1m_tif/
+# 13/canmatrix2_no_13_tif.zip
+#  subdir = 1st number in mapname after "canmatrix2_
+subdir1="$(echo $filename | cut -c 11-)"
+subdir2="$(echo $subdir1 | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')"
+dir="$url$subdir2/$filename"
+echo "finished script - getting map as follows:"
+echo $dir
+
+
+wget --show-progress --directory-prefix=$saveto   $dir
+echo "wget exit code is"
+echo $?
+if [ $? -ne 0 ]
+then
+      echo " "
+      echo "Download failed - wget error code wa#  1st parameter = $1 = filename = .zip map to download
+#  2nd parameter = $2 = directory location to save map tos"
+      echo $? 
+      exit 1
+fi  
+cd $saveto
+unzip *.zip
+rm *.zip
+rm *.xml
+echo " "
+echo "map saved to $saveto"
+echo " "

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# showcollar 
+# bash script to display collarnow.bmp a map using Image Viewer = eog
+echo "use template ==> displaymap 031e"
+echo "where 031e is map id" 
+ext=*
+eog $1collarnow.bmp

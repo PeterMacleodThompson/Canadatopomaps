@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# displaymap 
+# bash script to display a map using Image Viewer = eog
+echo "use template ==> displaymap 031e"
+echo "where 031e is map id" 
+ext=*
+eog $1$ext
+
+

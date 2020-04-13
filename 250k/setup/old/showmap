@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# showmap 
+# bash script to download a map
+#  check $? = 0 for success, $?=1 for map not found
+echo "be sure mapid is exported"
+echo "eg export MAPNOW=031e" 
+ext=*
+eog ../../../3raw/$MAPNOW$ext
+
+

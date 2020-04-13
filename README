@@ -1,0 +1,145 @@
+TESTING CANADA TOPOGRAPHIC MAPS
+Canada Topographic Maps is intended to be a library that 
+    that is part of a graphics program.  It
+    enables you to download, view, and navigate through
+    any of the 13,000+ topographic maps of Canada.
+You can test Canada Topographic Maps independently by running main2fortesting.c
+ - Set up the stucture as shown below. 
+ - change src_common/fcninit/initmappath.c to your directory eg.
+#define DATAPATH "/home/peter/bbb2020/oznext/data/share/oz3/"
+ - make
+
+
+STRUCTURE OF MAPS
+.../data/share/oz3/country/usage/maps/
+ for example .../data/share/oz3/Canada/topographic/maps/
+/maps
+|---countryusagecode   file with char ct
+|---mapsets            file containing every mapset for this country/usage
+|
+|---/mapset[0]         1m  = 1:1000,000 maps - Canada/topographic (ct)
+|      |
+|      |--maplist      list of ALL downloadable map files 
+|      |                  eg 031e_0300_canmatrix_prttif.zip
+|      |--mapimages    list of ALL SDL2 compatible map images 
+|      |                  eg 031e_0300_canmatrix_prt.tif
+|      |--mapids       list of ALL map unique id's.   eg 031e
+|      |--mapindex     list of ALL mapid's + collar,navigation info
+|      |
+|      |--raw          downloaded maps, still has collar, poor gps accuracy
+|      |--ready        manually decollared maps for pixel<->gps accuracy
+|      |
+|      |--run          software library of map functions (see below)
+|      |   |              which work for Canada/topographic (ct)
+|      |   |
+|      |   |--src     source code specific to this mapset
+|      |   |--scripts   download, display scripts for this mapset
+|      |--setup        spider scripts to browse for maps & create maplist
+|
+|
+|
+|---/mapset[1]        250k = 1:250,000 maps - Canada/topographic (ct)
+|      |
+|     as above
+|
+|---/mapset[2]        50k = 1:50,000 maps - Canada/topographic (ct)
+|      |
+|     as above
+
+
+
+A mapset is:
+  country eg Canada
+  usage   eg topographic
+  mapset file containing a suite of mapsets
+
+
+A mapset code is 4 characters
+  country is 1 characters     eg c for Canada
+  usage is 1 characters       eg t for topographic
+  mapset is 2 characters      eg 1m, 2k, 5k for 1m, 250k, 50k mapsets
+    Every map function is 
+    prefixed with its mapset code   eg ct2k for Canada/topographic/250k/ mapset
+    all functions are ct2k_goNorth(), ct2k_getmap()
+
+The country/usage code is the 1st 2 characters eg ct
+It MUST be stored by itself in ../country/usage/code.txt
+  and MUST match the if statements in /*the big switch*/ in /sr/maps/maphandler.c
+  eg /Canada/topographic/code.txt contains ct
+
+
+     
+Each mapset must have the following functions (with appropriate prefix)
+ * ct2k_fillmapnow()
+ * ct2k_gonorth()
+ * ct2k_gosouth()
+ * ct2k_goeast()
+ * ct2k_gowest()
+ * ct2k_gonorthqc()
+ * ct2k_gosouthqc()
+ * ct2k_goeastqc()
+ * ct2k_gowestqc()
+ * ct2k_zoomin()
+ * ct2k_zoomout()
+ * ct2k_zoominqc()
+ * ct2k_zoomoutqc()
+ * ct2k_download()
+ * ct2k_display()
+ * ct2k_collarcalc()
+ * ct2k_collarshow()
+ * ct2k_getmap()
+ * ct2k_getmapinfo()
+ * ct2k_setmap()
+ * ct2k_lltopp()
+ * ct2k_pptoll()
+ * ct2k_fetmap()
+ * ct2k_info()
+
+int init() sets default mapsetNOW, mapNOW static variables and
+       initiates array of function pointers  returns 0 if successful, 1 if not 
+
+INTEGER FUNCTIONS - NO ARGUMENTS   (12 entries) ==> Navigate functions
+---------------------------------------------------------------------
+int gonorth(void) returns 1 (TRUE) if map exists, 0(FALSE) otherwise
+  resets mapNOW
+  sample code: if(goNorth() ) mymap = getmap();
+int gosouth()
+int goeast()
+int gowest()
+
+int gonorthqc()   quick check - same as gonorth() but mapNOW not changed
+int gosouthqc()
+int goeastqc()
+int gowestqc()
+int zoominqc()  qc = quick check - returns value re existence, no action taken
+int zoomoutqc()   returns 1 (TRUE) if map exists, 0 (FALSE) otherwise
+int zoomin
+int zoomout
+
+
+CHAR FUNCTIONS - NO ARGUMENTS   (1 entries)
+-----------------------------------------------
+char *getmap(void) returns pointer to .tif string of mapNOW
+char *getmapinfo(void) returns pointer to string of mapindex info (maps.h)
+
+
+INT FUNCTIONS - 2 double ARGUMENTS   (1 entries)
+-----------------------------------------------
+int setmap( double latitude, double longitude)   sets mapNOW
+   returns 1 (TRUE) if map exists, 0(FALSE) otherwise
+   sample code: if(setmap(5.0, 5.0) ) mymap = getmap();
+
+
+INT FUNCTIONS - 2 double, 2 INT ARGUMENTS  (2 entries) ==> position functions
+---------------------------------------------------------------------------
+int getpp( double *latitude, double *longitude
+       int *pixelx, int *pixely)
+ get pixel point  
+    given lat,long - fill in pixel(x,y)  
+    return 1 if successful, 0 otherwise
+int getll(double *latitude, double *longitude
+       int *pixelx, int *pixely)
+  get lat long;   
+  given pixelx, pixely, fill in lat, long
+
+

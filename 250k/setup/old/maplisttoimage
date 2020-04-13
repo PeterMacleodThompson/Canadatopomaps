@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# maplisttoimage
+# bash script to convert maplist (which are .zip files for downloading)
+#    to mapimage (which are .tif files for display) 
+
+
+sed 's/prttif.zip/prt.tif/' ../../maplist  > ../../mapimages

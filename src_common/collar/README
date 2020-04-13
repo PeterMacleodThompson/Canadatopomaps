@@ -1,0 +1,31 @@
+identify collars algorithm
+
+Step 1 - convert map image to  grayscale
+------------------------------------
+Create array of 8 bit pixels using SDL2
+  https://dzone.com/articles/converting-an-image-to-grayscale-using-sdl2
+  http://gigi.nullneuron.net/gigilabs/converting-an-image-to-grayscale-using-sdl2/
+  https://www.cs.swarthmore.edu/~newhall/unixhelp/C_arrays.html 
+
+In gimp 
+  view > zoo > 100%      window > dockable dialog > pointer   image > mode > grayscale
+
+
+Step 2 Estimate 4 collar sizes
+------------------------------
+Rate as %  of whole image
+Err on having larger collar, not smaller collar. 
+Be sure 75% of map area is preserved
+Save these 4 collar estimates in mapset file 
+
+Step 3 convert almost black pixels to white
+-------------------------------------------
+This removes black letters and black bars in collar with
+minimal effect on map,  Use % of 0-255 grayscale range.
+eg 30%
+Save this 1 blackremove% in mapset file.  
+
+ TODO - MAKE MAPSET PROGRAM WHICH ASKS FOR ESTIMATES. 
+
+
+

@@ -1,0 +1,19 @@
+# Structure of Mapset - see maps.h 
+#
+#  char name[20];   /* eg C50k or C250k = directory name containing maps*/
+#  char urlpublic[300];  /* source URL for downloading */
+#  char urlpmt[300]; /* private URL for country/usage,
+#                        decollared maps, backup copies */
+#  int kscale;       /* mapsets MUST BE SORTED by kscale  */
+#  int collarN;      /* estimated % of total map (y-pixel) for North collar */
+#  int collarS;      /* estimated % of total map (y-pixel) for South collar */
+#  int collarE;      /* estimated % of total map (x-pixel) for East collar */
+#  int collarW;      /* estimated % of total map (x-pixel) for West collare */
+#  int noblack;      /* grayscale 0-255 below which is converted to white = 255 */
+#                    /* converts black letters in collar to white  eg 25 */
+# 
+#   9 entries in record
+#
+1m    http://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/1m_tif/ NULL 1000 4 12 15 4 100  
+250k http://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/250k/ NULL 250 4 12 15 4 100 
+50k http://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/50k/ NULL 50  4 12 15 4 100 

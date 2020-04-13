@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# download map into 50k mapset
+# bash script to download a map
+#
+#  1st parameter = $1 = filename = .zip map to download
+#  2nd parameter = $2 = directory location to save map to
+#  test:  ./downloadmap 031e01_0500_canmatrix_prttif.zip   ../../raw
+
+filename=$1 
+saveto=$2
+url=ftp://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/50k/
+
+echo "1st parameter filename = $filename"
+echo "2nd parameter saveto = $saveto"
+
+# check user entered a filename
+if [ -z "$filename" ]
+then
+      echo "no filename specified"
+      echo "retry using template..."
+      echo "downloadmap 031e_0300_canmatrix_prttif.zip   ../my/file/location"
+      exit 1
+else
+      echo " downloading $filename "
+fi
+
+
+# check if filename already downloaded
+mapname1="$(echo $filename | cut -c 1-25)"
+mapname2="$(echo $filename | cut -c 26-28)"
+mapname="$mapname1.$mapname2"
+if [ -f "$saveto$mapname" ]
+then
+      echo "$mapname already downloaded" 
+      exit 1
+fi     
+
+
+
+
+# build url filename
+subdir1="$(echo $filename | cut -c -3)"
+subdir2="$(echo $filename | cut -c 4)"
+subdir3="$(echo $filename | cut -c 5-6)"
+dir="$url$subdir1/$subdir2/$subdir3/$filename"
+echo $dir
+
+echo "finished script - getting map"
+
+
+#  wget ftp://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/50k/117/d/03/117d03_e_0100_canmatrix_prttif.zip
+
+wget --show-progress --directory-prefix=$saveto   $dir
+echo "wget exit code is"
+echo $?
+if [ $? -ne 0 ]
+then
+      echo " "
+      echo "Download failed - wget error code was"
+      echo $? 
+      exit 1
+fi  
+cd $saveto
+unzip *.zip
+rm *.zip
+rm *.xml
+echo " "
+echo "map saved to $saveto"
+echo " "
+
+
+
