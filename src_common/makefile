@@ -53,7 +53,7 @@ EXECUTABLE = main2fortesting
 
 # compiler and compiler flags to use 
 CC = gcc
-CFLAGS += -I /home/peter/bbb2020/oznext/src/include/  # -c -M -I  -M replaces makedepend command 
+CFLAGS += -I include/  # -c -M -I  -M replaces makedepend command 
 DEBUG = -g   # -g for gdb 
 LDFLAGS += # -L /home/peter/Documents/oz/usr/lib/  directory location of libraries
 LDLIBS += -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2_ttf 
