@@ -40,7 +40,7 @@ int ct_collarcalc() {
 
   mymapset = mapsetnow();
   mymap = mapindexinfo();
-  if (mymapset == NULL || mymap == NULL || err < 0) {
+  if (mymapset == NULL || mymap == NULL) {
     printf(" Error in opening mapset, map, or SDL2\n");
     return (-1);
   }
