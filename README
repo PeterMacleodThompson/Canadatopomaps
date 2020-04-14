@@ -1,13 +1,24 @@
 TESTING CANADA TOPOGRAPHIC MAPS
-Canada Topographic Maps is intended to be a library that 
-    that is part of a graphics program.  It
+Canada Topographic Maps is intended to be a sub-library that 
+    that is part of a main display graphics program.  It
     enables you to download, view, and navigate through
     any of the 13,000+ topographic maps of Canada.
+
 You can test Canada Topographic Maps independently by running main2fortesting.c
- - Set up the stucture as shown below. 
- - change src_common/fcninit/initmappath.c to your directory eg.
-#define DATAPATH "/home/peter/bbb2020/oznext/data/share/oz3/"
- - make
+ 0) git clone https://github.com/PeterMacleodThompson/Canadatopomaps
+ 1) sudo apt-get install libsdl2-dev   (if necessary)
+    sudo apt-get install libsdl2-gfx-dev (if necessary)
+    sudo apt-get install libsdl2-image-dev (if necessary)
+    sudo apt-get install libsdl2-ttf-dev (if necessary)
+ 2) Set up the Canada Topographic Map stucture.
+      change Canadatopomaps ==> Canada/topographic/maps/ 
+ 3) cd Canada/topographic/maps/src_common/
+ 4) change src_common/fcninit/initmappath.c DATAPATH to your directory 
+      which points to /Canada/topographic/maps/.
+      eg #define DATAPATH "/home/peter/bbb2020/oznext/data/share/oz3/"
+ 5) mkdir obj    (if necessary)
+ 6) make 
+ 7) ./main2fortesting
 
 
 STRUCTURE OF MAPS
